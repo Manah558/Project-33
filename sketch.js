@@ -1,77 +1,60 @@
-const Engine = Matter.Engine;
-const World = Matter.World;
-const Bodies =  Matter.Bodies;
-const Constraint = Matter.Constraint;
-var bg,ground,gimg;
-var runner,runnerImg;
-var ice=[];
-var maxSnow=100;
-
+var snow1, snow2, snow3, snow4, snow5;
+var snow1Img, snow2Img, snow3Img, snow4Img, snow5Img;
+var bgImg;
 function preload(){
-  bg=loadImage("snow2.jpg");
-  gimg=loadImage("ground.PNG");
-  runnerImg=loadAnimation("sc1.PNG","sc2.PNG","sc3.PNG","sc4.PNG","sc5.PNG","sc6.PNG","sc7.PNG","sc8.PNG","sc9.PNG","sc10.PNG","sc11.PNG","sc12.PNG")
+  snow1Img = loadImage("snow4.webp");
+  snow2Img = loadImage("snow4.webp")
+  snow3Img = loadImage("snow4.webp");
+  snow4Img = loadImage("snow4.webp");
+  snow5Img = loadImage("snow4.webp");
 }
 
 function setup() {
-  createCanvas(1300,600);
-  
-  engine=Engine.create();
-  world= engine.world;
-  
+  createCanvas(800,400);
+  snow1 = createSprite(200, 80, 20, 20);
+  snow1.addImage(snow1Img);
+  snow1Img.scale = 0.2;
 
+  snow2 = createSprite(300, 80, 20, 20);
+  snow2.addImage(snow1Img);
+  snow2.scale = 0.2;
 
-ground=createSprite(650,670);
-ground.addImage(gimg);
-ground.scale=3.2;
-ground.velocityX=-10;
+  snow3 = createSprite(400, 80, 20, 20);
+  snow3.addImage(snow1Img);
+  snow3.scale = 0.2;
 
-runner=createSprite(150,480);
-runner.addAnimation("runner",runnerImg)
-runner.scale=1.1;
-runner.velocityX=2;
-runner.setCollider("rectangle",15, -20,100,180) 
+  snow4 = createSprite(500, 80, 20, 20);
+  snow4.addImage(snow1Img);
+  snow4.scale = 0.2;
 
-if(frameCount % 275 === 0){
-  for(var i=0; i<maxSnow; i++){
-  ice.push(new Snow(random(0,1350), random(0,50)));
-  }
-  }
+  snow5 = createSprite(600, 80, 20, 20);
+  snow5.addImage(snow1Img);
+  snow5.scale = 0.2;
 
-
+  bgImg = loadImage("snow3.jpg");
 }
 
 function draw() {
-  background(bg);  
-  Engine.update(engine);
-
-  runner.collide(ground);
-
-  if(ground.x < 530){
-    ground.x=600;
-  }
-
-  if(runner.x > 1200){
-    runner.x=150;
-  }
-
-  if(keyWentDown("space")&& runner.y >= 100) {
-    runner.velocityY = -12;
+  background(bgImg );  
+  snow1.display();
+  snow2.display();
+  snow3.display();
+  snow4.display();
+  snow5.display();
+  
+  textSize(40);
+  text("Snowfall Animation",400,380);
+  movement();
+  drawSprites();
 }
 
-//add gravity
-runner.velocityY = runner.velocityY + 0.8
-
-  for(var i = 0;i < maxSnow; i++){
-    ice[i].display();
-    ice[i].changePosition();
-    }    
-    
-
-
-ground.display();
-
-  
-  drawSprites();
-
+function movement(){
+  if(frameCount%80===0) {
+    console.log(frameCount);
+    snow1.y=random(10,400);
+    snow2.y=random(10,400);
+    snow3.y=random(10,180);
+    snow4.y=random(10,180);
+    snow5.y=random(10,180);
+}
 }
